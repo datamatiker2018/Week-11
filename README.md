@@ -177,7 +177,7 @@ class Greeter
 
 The above example illustrates a very simple point: _non_-`static` methods must be called on **instances** of a class, that is on _objects_.
 
-The `Greet()` method can _only_ be called on actual instances of our `Greeter` class, meaning `Greeter.Greet()` wouldn't work! So contrary to the previously mentioned _global_ scope, we can call this an _instance_ scope, or an _object_ scope: the context of our method is no longer the program in it's entirety, but a specific instance of our `Greeter` class.
+The `Greet()` method can _only_ be called on actual instances of our `Greeter` class, meaning `Greeter.Greet()` wouldn't work! So contrary to the previously mentioned _global_ scope, we can call this an _instance_ scope, or an _object_ scope: the context of our method is no longer the program in it's entirety, but a specific instance of our `Greeter` class. You can refer to any non-`static` method as an "instance" method.
 
 To further illustrate this, let's add some state to our `Greeter`, making every instance unique.
 
