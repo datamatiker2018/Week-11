@@ -86,11 +86,41 @@ _Side note: "calling" a method is synonymous with "invoking" a method, just for 
 
 **Every line of logical code in your program will be contained within a method.** This even includes our `Main()` method.
 
-This is where the term "method" will start to have a semantically different meaning than our previously established "procedure", "subroutine", and "function".
+```
+class Program
+{
+    static void Main()
+    {
+        ExampleMethod();
+        ExampleMethod();
+        ExampleMethod();
+        ExampleMethod();
+        ExampleMethod();
+    }
+
+    static void ExampleMethod()
+    { // Opening bracket indicates the start of our code block
+        int n = 10; // This is a statement
+        int m = 0; // This is a statement
+
+        if (true) // This is a statement
+        { // Start code block
+            n = 5; // This is a code block with a statement in it
+        } // End code block
+
+        for (int i = 0; i < n; i++) // This is a statement
+        { // Start code block
+            m = m + i; // This is also a code block
+        } // End code block
+    } // Closing bracket indicates the end of our code block
+}
+```
+
+This, however, is also where the term "method" will start to have a semantically different meaning from our previously established "procedure", "subroutine", and "function".
 
 Context is key, always. But context of what? This is where object-oriented thinking and programming starts making more sense, but also becomes quite a bit more complicated.
 
-Up untill now, I've used the idea of "jumping" fairly liberally. I've stated that we can jump to a subroutine "whenever we need to", which in assembly is true, but not so for higher level languages like C#. In C#, and other high-level languages, we have the idea of _context_ to keep in mind. _Context_ is the place in which a piece of code is located, or the state the program is currently in. The simplest of contexts, is the "global" context. The "global" context is that of the entire program. In C#, our global context starts and ends with our `Main()` method. Of relevance here is the `static` keyword, which you undoubtably used on some methods prior to this. As you might know, marking a method as `static` binds it to the class on which it is defined, but it may be called anywhere you want, so long as you reference the class.
+Up untill now, I've used the idea of "jumping" fairly liberally. I've stated that we can jump to a subroutine "whenever we need to", which in assembly is true, but not so for higher level languages like C#. In C#, and other high-level languages, we have the idea of _scope_ to keep in mind. The _scope_ of anything in C#, depends on where it's written, and certain modifiers. The simplest of scopes, is the "global" scope. The "global" scope is that of the entire program. Of relevance here is the `static` modifier, which you undoubtably used on some methods prior to this. As you might know, marking a method as `static` binds it to the class on which it is defined, but it may be called anywhere you want, so long as you reference the class.
 
 ```
 public class Program
@@ -119,7 +149,7 @@ _Note: all methods from here on are marked `public` for simplicity, we'll discus
 
 You might even notice that `Program.Main()` is also a static method, which is simply a convention specified in the C# language specification, to standardise application startup.
 
-So `static` methods are available in the `global` context. What about non `static` methods then? As you may recall, in object oriented programming, we have these "classes", which may be instantiated into "objects".
+So `static` methods are available in the `global` scope. What about non `static` methods then? As you may recall, in object oriented programming, we have these "classes", which may be instantiated into "objects".
 
 ```
 public class Program
@@ -147,9 +177,9 @@ class Greeter
 
 The above example illustrates a very simple point: _non_-`static` methods must be called on **instances** of a class, that is on _objects_.
 
-The `Greet()` method can _only_ be called on actual instances of our `Greeter` class, meaning `Greeter.Greet()` wouldn't work! So contrary to the previously mentioned _global_ context, we can call this an _instance_ context, or an _object_ context: the context is no longer the program in it's entirety, but a specific instance of our `Greeter` class.
+The `Greet()` method can _only_ be called on actual instances of our `Greeter` class, meaning `Greeter.Greet()` wouldn't work! So contrary to the previously mentioned _global_ scope, we can call this an _instance_ scope, or an _object_ scope: the context of our method is no longer the program in it's entirety, but a specific instance of our `Greeter` class.
 
-To further illustrate this, let's add some state to our greeter, making every instance unique.
+To further illustrate this, let's add some state to our `Greeter`, making every instance unique.
 
 ```
 public class Program
@@ -188,8 +218,6 @@ class Greeter
 Methods are, like attributes, defined as _members_ of a class.
 
 This is the very foundation of all object oriented programming. While it might seem redundant for now, with our small arbitrary examples, you'll come to learn that objects are **very** powerful tools indeed. 
-
-_Note: "context" may be synonymous with "scope" in some cases, but don't worry too much about it._
 
 # Signature [signature]
 
