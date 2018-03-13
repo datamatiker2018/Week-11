@@ -3,8 +3,11 @@ public class Program
     public static void Main()
     {
         Greeter greeter = new Greeter("Hello ");
-
+            
         greeter.Greet("Rune");
+        greeter.Greet("Rune", true);
+
+        Console.Read();
     }
 }
 
@@ -17,8 +20,15 @@ class Greeter
         _greeting = greeting;
     }
 
-    public void Greet(string name)
+    public void Greet(string name, bool yell = false)
     {
-        Console.WriteLine(_greeting + name);
+        string greeting = _greeting + name;
+
+        if (yell)
+        {
+            greeting = greeting + "!";
+        }
+
+        Console.WriteLine(greeting);
     }
 }
