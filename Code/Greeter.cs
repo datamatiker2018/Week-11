@@ -2,14 +2,9 @@ public class Program
 {
     public static void Main()
     {
-        // Create some instances of our Greeter, with unique greetings
-        Greeter traditional = new Greeter("Hello!");
-        Greeter casual = new Greeter("Hey!");
-        Greeter cool = new Greeter("Yo!");
+        Greeter greeter = new Greeter("Hello ");
 
-        traditional.Greet(); // Hello!
-        casual.Greet(); // Hey!
-        cool.Greet(); // Yo!
+        greeter.Greet("Rune");
     }
 }
 
@@ -19,13 +14,11 @@ class Greeter
 
     public Greeter(string greeting)
     {
-        // We want a unique greeting for each instance of our greeter
         _greeting = greeting;
     }
 
-    public void Greet()
+    public void Greet(string name)
     {
-        // Now the greeter will use the instance specific greeting
-        Console.WriteLine(_greeting);
+        Console.WriteLine(_greeting + name);
     }
 }
