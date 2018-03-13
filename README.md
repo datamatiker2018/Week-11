@@ -626,7 +626,7 @@ public class Program
             Console.WriteLine("You didn't enter a valid integer.");
         }
 
-        Console.WriteLine("The square root of your favorite number is " + (number * number));
+        Console.WriteLine("Your favorite number squared is " + (number * number));
     }
 }
 ``` 
