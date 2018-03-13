@@ -84,6 +84,8 @@ _Side note: "calling" a method is synonymous with "invoking" a method, just for 
 
 >In C#, every executed instruction is performed in the context of a method.
 
+**Every line of logical code in your program will be contained within a method.** This even includes our `Main()` method.
+
 This is where the term "method" will start to have a semantically different meaning than our previously established "procedure", "subroutine", and "function".
 
 Context is key, always. But context of what? This is where object-oriented thinking and programming starts making more sense, but also becomes quite a bit more complicated.
