@@ -592,7 +592,7 @@ public class Program
 	Console.WriteLine(person.Name); // "Rune"
     }
 
-    static void GetValues(out int number, out Person person)
+    static void Change(out int number, out Person person)
     {
         number = 20;
 	person = new Person();
