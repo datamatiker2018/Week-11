@@ -374,9 +374,9 @@ Methods can typically be categorized as either being a _command_ or a _query_. A
 
 `name` simply defines the name of our method. The `name` can be whatever we choose, with a few limitations:
 
-* Only a constructor method may be named the same as the containing class
+* A constructor method MUST be named the same as the containing class
 * A method name MUST only contain alphanumeric characters, numbers, and underscores
-* A method name MUST not begin with a number
+* A method name MUST NOT begin with a number
 
 For naming, Microsoft has a set of [recommended conventions][2.2], which I suggest you follow, as they're very standardised throughout the C# ecosystem.
 
