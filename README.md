@@ -91,9 +91,9 @@ Context is key, always. But context of what? This is where object-oriented think
 Up untill now, I've used the idea of "jumping" fairly liberally. I've stated that we can jump to a subroutine "whenever we need to", which in assembly is true, but not so for higher level languages like C#. In C#, and other high-level languages, we have the idea of _context_ to keep in mind. _Context_ is the place in which a piece of code is located, or the state the program is currently in. The simplest of contexts, is the "global" context. The "global" context is that of the entire program. In C#, our global context starts and ends with our `Main()` method. Of relevance here is the `static` keyword, which you undoubtably used on some methods prior to this. As you might know, marking a method as `static` binds it to the class on which it is defined, but it may be called anywhere you want, so long as you reference the class.
 
 ```
-class Program
+public class Program
 {
-    void static Main()
+    public static void Main()
     {
         // We call method Greet() directly on class Foo
 	Greeter.Greet();
@@ -120,9 +120,9 @@ You might even notice that `Program.Main()` is also a static method, which is si
 So `static` methods are available in the `global` context. What about non `static` methods then? As you may recall, in object oriented programming, we have these "classes", which may be instantiated into "objects".
 
 ```
-class Program
+public class Program
 {
-    void static Main()
+    public static void Main()
     {
 	// Create an instance of Greeter
 	Greeter greeter = new Greeter();
@@ -150,9 +150,9 @@ The `Greet()` method can _only_ be called on actual instances of our `Greeter` c
 To further illustrate this, let's add some state to our greeter, making every instance unique.
 
 ```
-class Program
+public class Program
 {
-    void static Main()
+    public static void Main()
     {
 	// Create some instances of our Greeter, with unique greetings
 	Greeter traditional = new Greeter("Hello!");
@@ -213,9 +213,9 @@ Of these, you should know how `static` works, and if not you can reread the [ore
 As mentioned, methods definitions will default to being `private`. As is the case with other class members, a `private` method may only be invoced by the defining class itself. This means that for a class `Foo` with a `private void Bar()`, only other methods of ´Foo` may call `Bar`.
 
 ```
-class Program
+public class Program
 {
-    void static Main()
+    public static void Main()
     {
         Foo f = new Foo();
 
@@ -247,9 +247,9 @@ Enacpsulation and coupling will be a major focus next semester, so don't worry t
 `return_type` defines the _resulting type_ of calling the method. A `return_type` is any data type defined in C#, including (but not limited to) `int`, `string` or any of your defined classes. 
 
 ```
-class Program
+public class Program
 {
-    void static Main()
+    public static void Main()
     {
         Fox fox = new Fox();
 	// Notice that the datatype of sound must match that of
@@ -292,9 +292,9 @@ class Fox
 The exception to this rule is, that a method may be marked as `void`, which means that the method produces no result.
 
 ```
-class Program
+public class Program
 {
-    void static Main()
+    public static void Main()
     {
         Fox fox = new Fox();
         
@@ -340,7 +340,7 @@ class Fox
 }
 ```
 
-Methods can typically be categorized as either being a _command_ or a _query_. A _command_ is method which performs some action, which may have side effects such as changes in state. These are typically `void`, though having a return value, such as whether or not the command was a success, is very common. A _query_ is a method which as no side effects, and always results in some value - as such these are **never** void. In our `Fox` class above, `Jump()` is an example of a command (with no side effects, but a command still), while `GetSound()` is a query.
+Methods can typically be categorized as either being a _command_ or a _query_. A _command_ is method which performs some action, which may have side effects such as changes in state. These are typically `void`, though having a return value, such as whether or not the command was a success, is very common. A _query_ is a method which as no side effects, and always results in some value - as such these are **never** void. In our `Fox` class above, `Jump()` is an example of a command, while `GetSound()` is a query.
 
 `name` simply defines the name of our method. The `name` can be whatever we choose, with a few limitations:
 
@@ -352,16 +352,273 @@ For naming, Microsoft has a set of [recommended conventions][2.2], which I sugge
 
 # Parameters [parameters]
 
-## Pass by value or reference
+The final part of a method signature, is the parameters list.
 
-## Optional parameters
+Parameters are essentially just a set of variables, which the method uses in some way. An example you've already used quite a lot would be [`Console.WriteLine(String)`][2.3], which takes a `string` value as a parameter, and prints it to the console. It's typically said that you "pass" values into a method through it's parameters, in the form of "arguments". An _argument_ is formally different from a _parameter_ in context, in the sense that a _parameter_ the formal variable defined in the method signature, whereas an _argument_ is the actual value passed into the method through a parameter.
 
-## `out` parameters
+```
+class MyMath
+{
+    // Add() has the **parameters** a and b
+    public int Add(int a, int b)
+    {
+        // Add() adds together the **arguments** a and b
+	return a + b;
+    }
+}
+```
 
-## `ref` parameters
+In a team environment, "parameter" and "argument" are used fairly interchangeably, but when reading through formal documentation, the two may are likely used formally.
+
+Below is the `Greeter` example again, except this time, we set it up so that it may greet a specific name.
+
+```
+public class Program
+{
+    public static void Main()
+    {
+	// Create a new instance of our Greeter, like earlier, except we're using some string formatting
+	// See this link for more: https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting#composite-format-string
+	Greeter greeter = new Greeter("Hello {0}!");
+
+	greeter.Greet("Rune"); // "Hello Rune!"
+    }
+}
+
+class Greeter
+{
+    private string _greeting;
+
+    public Greeter(string greeting)
+    {
+        // Constructors usually have parameters too, see?
+        _greeting = greeting;
+    }
+
+    public void Greet(string name)
+    {
+	// Now the greeter will greet a specific name
+	// ...just imagine that it replaces the "{0}" in _greeting with name
+	// See Console.WriteLine() on MSDN for more https://msdn.microsoft.com/en-us/library/586y06yf(v=vs.110).aspx
+        Console.WriteLine(_greeting, name);
+    }
+}
+```
+
+The above illustrates how `Greeter` _requires_ the consumer of it's `Greet()` method to pass in a name to be greeted. However, what if we don't necessarily want to _require_ it, and instead make it _optional_?
+
+```
+public class Program
+{
+    public static void Main()
+    {
+	// Create a new instance of our Greeter, like earlier, except we're using some string formatting
+	// See this link for more: https://docs.microsoft.com/en-us/dotnet/standard/base-types/composite-formatting#composite-format-string
+	Greeter greeter = new Greeter("Hello {0}!");
+
+	greeter.Greet(); // "Hello World!"
+    }
+}
+
+class Greeter
+{
+    private string _greeting;
+
+    public Greeter(string greeting)
+    {
+        // Constructors usually have parameters too, see?
+        _greeting = greeting;
+    }
+
+    // Notice how we've just "assigned" our name to a default value
+    public void Greet(string name = "World")
+    {
+        Console.WriteLine(_greeting, name);
+    }
+}
+```
+
+The new and improved `Greet()` method still takes a single argument `name`, however now it defaults this to the string value `"World"`. So in case the consumer doesn't supply the `name` argument, `name` will always just be `"World"`.
+
+Optional parameters are cool, but should be used with consideration as they tend to clutter your class' interface, and can quickly result in confusion, and from there bugs.
+
+## Pass by _value_ or _reference_
+
+There are two kinds of types in C#: _value types_ and _reference types_. In short, _value types_ are primitive types such as `int`, `float`, `double`, `bool` etc., whereas _reference types_ are instances of classes. For a more in-depth explanation, and a list of types, [see MSDN.][2.4] No matter the type, C# will pass all arguments _by value_ to a method, unless otherwise specified. We'll discuss this first.
+
+Rune briefly convered the concepts of "stack" and "heap" memory, and how objects are stored on the heap, and how this means you reference the same object when assigning it to different variables.
+
+```
+public class Program
+{
+    public static void Main()
+    {
+	// int is a **value type**
+	int numberA = 10;
+	int numberB = numberA;
+
+	numberA = 20;
+
+	// Person is a **reference type**
+        Person personA = new Person();
+        Person personB = personA;
+
+	personA.Name = "Rune";
+
+	Console.WriteLine(numberB); // 10
+	Console.WriteLine(personB.Name); // "Rune"
+    }
+}
+
+class Person
+{
+    public string Name;
+}
+```
+
+The above program illustrates how _value_ and _reference_ types differ, in a simplistic manner. `numberB` doesn't reflect changes to `numberA`, since `numberB` is a **copy** of `numberA` on the stack, while `personB` reflects changes to `personA`, since `personB` is a copy of the **reference** to the same `Person` object on the heap as `personA`.
+
+This behaviour of **copying** values or references, is what we mean when we say "pass by value": we **copy** any values passed as arguments to a method, and if the method performs changes on it's arguments, they will happen just like illustrated above.
+
+```
+public class Program
+{
+    public static void Main()
+    {
+	// int is a **value type**
+	int number = 10;
+        Person person = new Person();
+
+        Change(number, person);
+
+	Console.WriteLine(number); // 10
+	Console.WriteLine(person.Name); // "Rune"
+    }
+
+    static void Change(int number, Person person)
+    {
+        number = 20;
+	person.Name = "Rune";
+    }
+}
+
+class Person
+{
+    public string Name;
+}
+```
+
+The program above is simply modified to use a static method to attempt changing the values, just like before. Understanding how arguments are passed by value is essential.
+
+Now that we know what "pass by value" is, that leaves us with "pass by reference", which behaves in the exact opposite way. When we pass by reference, we tell C# to "point to the existing value in memory", which the method may then apply changes to.
+
+In C# we have two ways marking a parameter to use "pass by reference": `ref` and `out`.
+
+```
+public class Program
+{
+    public static void Main()
+    {
+	int number = 10;
+        Person person = new Person();
+
+        Change(ref number, ref person);
+
+	Console.WriteLine(number); // 20
+	Console.WriteLine(person.Name); // "Rune"
+    }
+
+    static void Change(ref int number, ref Person person)
+    {
+        number = 20;
+	person.Name = "Rune";
+    }
+}
+
+class Person
+{
+    public string Name;
+}
+```
+
+The above illustrates how using the `ref` keyword in our parameter list changes the parameter. Now the `number` passed into `Change()` may be **completely changed** by the method (the same is true for `person`, but not illustrated). This is because we've told C# to allow changing the exact spot in memory where the value of `number` was stored.
+
+This technique, while powerful, is also very dangerous, and prone to bugs, unless handled carefully. It's generally not advised to use the `ref` keyword, unless you have a very specific reason to - you could say this is also why we have to make the usage very explicit in our code with the use of the `ref` in both the method signature and call.
+
+The second way of passing arguments by reference, is using the `out` keyword.
+
+```
+public class Program
+{
+    public static void Main()
+    {
+        // Notice how we only _declare_ the variables, we don't assign them to anything
+	int number;
+        Person person;
+
+        Change(out number, out person);
+
+	Console.WriteLine(number); // 20
+	Console.WriteLine(person.Name); // "Rune"
+    }
+
+    static void GetValues(out int number, out Person person)
+    {
+        number = 20;
+	person = new Person();
+        person.Name = "Rune";
+    }
+}
+
+class Person
+{
+    public string Name;
+}
+```
+
+Marking a parameter with `out`, is essentially like saying "the method will asign a value for you". In the above example, it's important to notice, that our `number` and `person` variables have only been **declared** and not **assigned**. If you were to assign either, and pass them by reference using `out`, it would result in an error.
+
+With `out`, we don't run the risk of methods overwriting our values, and as such they're generally safe to use. The most typical use case of `out` parameters, is when you want to emulate having multiple return values. Since methods only allows the return of a single value, you could use `out` parameters to "assign" other values too. This is especially handy in situations where a method should indicate it's success at completion, while also giving you a value to work with.
+
+```
+public class Program
+{
+    public static void Main()
+    {
+        Console.Write("What's you favorite number? ");
+
+        string input = Console.ReadLine();
+	int number;
+
+        // See https://msdn.microsoft.com/en-us/library/f02979c7(v=vs.110).aspx
+        if (!int.TryParse(input, out number))
+        {
+            Console.WriteLine("You didn't enter a valid integer.");
+        }
+
+        Console.WriteLine("The square root of your favorite number is " + (number * number));
+    }
+}
+``` 
+
+In the above example, `int.TryParse()` attempts to parse a string value into an integer. If the parsing is successful, it returns `true`, otherwise it returns `false`. The second parameter, marked with `out`, will become the result of the actual parsing. Every number based type has a `TryParse()` method for convenience.
+
+While `out` has definite uses, it can also become quite messy. In general, you only want your methods to return a single value, since that means seperating concerns into many, smaller methods, but in some cases like `TryParse()`, it's quite nice.
+
+# More advanced topics [advanced]
+
+Here are some links for further reading, which covers more advanced topics related to methods.
+
+* [Lambda expressions][3.1]
+* [Events][3.2]
 
 
 [1.1]: https://en.wikipedia.org/wiki/Program_counter "Instruction pointer"
 [1.2]: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/classes-and-structs/methods "MSDN on methods"
 [2.1]: https://github.com/dotnet/csharplang/blob/master/spec/classes.md#methods "Method specification"
 [2.2]: https://docs.microsoft.com/en-us/dotnet/standard/design-guidelines/general-naming-conventions "General naming conventions"
+[2.3]: https://msdn.microsoft.com/en-us/library/xf2k8ftb(v=vs.110).aspx "MSDN on Console.WriteLine(String)"
+[2.4]: https://docs.microsoft.com/en-us/dotnet/csharp/tour-of-csharp/types-and-variables "MSDN on types"
+[3.1]: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/statements-expressions-operators/lambda-expressions "Lambda expressions"
+[3.2]: https://docs.microsoft.com/en-us/dotnet/csharp/programming-guide/events/ "Events" 
+
