@@ -240,7 +240,7 @@ I'll run through each part in detail here, but [parameters][parameters] will hav
 
 Of these, you should know how `static` works, and if not you can reread the [orevious part][what]. Of special interest, however, is the access modifier, which defines the _visibility_ of the method, or in more practical terms, _who may call_ the method.
 
-As mentioned, methods definitions will default to being `private`. As is the case with other class members, a `private` method may only be invoced by the defining class itself. This means that for a class `Foo` with a `private void Bar()`, only other methods of ´Foo` may call `Bar`.
+As mentioned, methods definitions will default to being `private`. As is the case with other class members, a `private` method may only be invoced by the defining class itself. This means that for a class `Foo` with a `private void Bar()`, only other methods of `Foo` may call `Bar`.
 
 ```
 public class Program
