@@ -1,3 +1,18 @@
+public class Program
+{
+    public static void Main()
+    {
+        // Create some instances of our Greeter, with unique greetings
+        Greeter traditional = new Greeter("Hello!");
+        Greeter casual = new Greeter("Hey!");
+        Greeter cool = new Greeter("Yo!");
+
+        traditional.Greet(); // Hello!
+        casual.Greet(); // Hey!
+        cool.Greet(); // Yo!
+    }
+}
+
 class Greeter
 {
     private string _greeting;
