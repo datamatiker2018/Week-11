@@ -1,6 +1,8 @@
 Week 11: Methods
 ================
 
+<simm@edu.eal.dk>
+
 This week we'll be going over the concept of _methods_ in object oriented programming.
 
 To start off, we'll discuss [what][what a method _is_], in more general terms, to build some fundamental knowledge about computer programming, and gain insight into what advantages methods give us. Afterwards, we'll discuss how a method is defined in C#, specifically what a method [signature][signature] consists of, and what it means for our code. Finally, we'll go through how to specify [parameters][method parameters] and the different implications of these.
